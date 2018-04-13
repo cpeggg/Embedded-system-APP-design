@@ -17,6 +17,3 @@ int main(){
   printf("%d",i);
   return 0;
 }
-int b(){
-	return 13;
-}
