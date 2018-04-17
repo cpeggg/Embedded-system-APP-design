@@ -2,6 +2,9 @@
 int a(){
   return 1;
 }
+int b(){
+	return 13;
+}
 /*
   Please upload one function to this file using git command so that we can finish this program.
 */
