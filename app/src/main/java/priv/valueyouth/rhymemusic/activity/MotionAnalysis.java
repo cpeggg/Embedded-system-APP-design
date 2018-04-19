@@ -15,6 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -28,7 +33,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import priv.valueyouth.rhymemusic.R;
+import priv.valueyouth.rhymemusic.bean.EmotionBean;
+
 
 
 public class MotionAnalysis extends AppCompatActivity
@@ -119,6 +128,16 @@ public class MotionAnalysis extends AppCompatActivity
                     // 后台的计算结果将通过该方法传递到UI 线程，并且在界面上展示给用户.
                     protected void onPostExecute(Object result) {
                         super.onPostExecute(result);
+
+                        Gson gson = new Gson();
+                        Log.d("INFO","return value:\n"+result);
+                        String transfer=result.toString();
+                        transfer = transfer.substring(transfer.indexOf("emotion")+9,transfer.length()-4);
+
+                        Log.d("INFO","return transfer:\n"+transfer);
+                        EmotionBean emotionBean = gson.fromJson(transfer, EmotionBean.class);
+                        result=emotionBean.getEmotion();
+
                         String tips = "情绪识别结果："+result;
                         Toast.makeText(MotionAnalysis.this, tips, Toast.LENGTH_SHORT).show();
                         return ;
@@ -152,8 +171,8 @@ public class MotionAnalysis extends AppCompatActivity
         try {
             // (HttpConst.uploadImage 上传到服务器的地址
 
-            URL url = new URL("https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize");
-            conn = (HttpURLConnection) url.openConnection();
+            URL url = new URL("https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=false&returnFaceAttributes=emotion");
+            conn = (HttpsURLConnection) url.openConnection();
             Log.d("INFO","Connection built.");
             conn.setConnectTimeout(5000);
             conn.setReadTimeout(30000);
@@ -163,14 +182,10 @@ public class MotionAnalysis extends AppCompatActivity
             // 设置请求方法
             conn.setRequestMethod("POST");
             // 设置header
-            conn.setRequestProperty("Content-Type","octet-stream");
+            conn.setRequestProperty("Host","westcentralus.api.cognitive.microsoft.com");
+            //conn.setRequestProperty("Content-Type","application/json");
+            conn.setRequestProperty("Content-Type","application/octet-stream");
             conn.setRequestProperty("Ocp-Apim-Subscription-Key","154ff89e136d41cd80d7ad5d3fe9eae5");
-
-//            conn.setRequestProperty("Accept","*/*");
-//            conn.setRequestProperty("Connection", "keep-alive");
-//            conn.setRequestProperty("Ocp-Apim-Subscription-Key","154ff89e136d41cd80d7ad5d3fe9eae5");
-//            conn.setRequestProperty("Content-Type",
-//                    "multipart/form-data; boundary=" + BOUNDARY);
             // 获取写输入流
             OutputStream out = new DataOutputStream(conn.getOutputStream());
             // 获取上传文件
@@ -186,17 +201,16 @@ public class MotionAnalysis extends AppCompatActivity
             // 每次上传的大小
             byte[] bufferOut = new byte[1024];
             // 上传文件
+
             Log.d("INFO","Start to upload files");
             while ((picbytes = inputStream.read(bufferOut)) != -1) {
                 // 上传文件(一份)
                 out.write(bufferOut, 0, picbytes);
             }
             Log.d("INFO","Ready to close inputStream");
+
             // 关闭文件流
             inputStream.close();
-
-            // 标识payLoad + 文件流的结尾位置
-            out.write(preFix.getBytes());
 
             // 至此上传代码完毕
 
@@ -210,7 +224,8 @@ public class MotionAnalysis extends AppCompatActivity
             out.close();
             Log.d("INFO","GET request from server.");
             // 重新构造一个StringBuffer,用来存放从服务器获取到的数据
-            strBuf = new StringBuffer();
+            StringBuffer strBuf = new StringBuffer();
+
 
             // 打开输入流 , 读取服务器返回的数据
             BufferedReader reader = new BufferedReader(new
