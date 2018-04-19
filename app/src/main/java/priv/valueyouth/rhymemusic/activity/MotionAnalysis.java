@@ -32,22 +32,35 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import priv.valueyouth.rhymemusic.R;
+import priv.valueyouth.rhymemusic.application.MusicApplication;
 import priv.valueyouth.rhymemusic.bean.EmotionBean;
-
+import priv.valueyouth.rhymemusic.util.Audio;
+import priv.valueyouth.rhymemusic.util.AudioUtil;
 
 
 public class MotionAnalysis extends AppCompatActivity
 {
-
+    /**
+     * anger": 1.0570484E-08,
+     "contempt": 1.52679547E-09,
+     "disgust": 1.60232943E-07,
+     "fear": 6.00660363E-12,
+     "happiness": 0.9999998,
+     "neutral": 9.449728E-09,
+     "sadness": 1.23025981E-08,
+     "surprise": 9.91396E-10
+     */
     private SurfaceView sv_takephoto;
     private Button b_OK;
     private Button b_qh;
     private Camera camera;
-
+    private ArrayList<Audio> audioList;
+    public static final String[] MOODS={"anger","contempt","disgust","fear","happiness","neutral","sadness","surprise"};//心情标签
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +150,7 @@ public class MotionAnalysis extends AppCompatActivity
                         Log.d("INFO","return transfer:\n"+transfer);
                         EmotionBean emotionBean = gson.fromJson(transfer, EmotionBean.class);
                         result=emotionBean.getEmotion();
-
+                        playbymood((String) result);
                         String tips = "情绪识别结果："+result;
                         Toast.makeText(MotionAnalysis.this, tips, Toast.LENGTH_SHORT).show();
                         return ;
@@ -146,6 +159,7 @@ public class MotionAnalysis extends AppCompatActivity
                     //该方法运行在后台线程中，因此不能在该线程中更新UI，UI线程为主线程
                     protected Object doInBackground(String... params) {
                         String result = uploadpic(picpath,filename);
+
                         return result;
                     }
 
@@ -225,10 +239,7 @@ public class MotionAnalysis extends AppCompatActivity
             Log.d("INFO","GET request from server.");
             // 重新构造一个StringBuffer,用来存放从服务器获取到的数据
             StringBuffer strBuf = new StringBuffer();
-<<<<<<< HEAD
 
-=======
->>>>>>> 631f00c36abf86e840a7fa7e8fef3f851341b259
 
             // 打开输入流 , 读取服务器返回的数据
             BufferedReader reader = new BufferedReader(new
@@ -256,5 +267,41 @@ public class MotionAnalysis extends AppCompatActivity
             e.printStackTrace();
             return "ERROR";
         }
+    }
+    public void playbymood(String mood) {
+//        mainActivity = (MainActivity) getActivity();
+//        Log.d("INFO", "Activity got");
+        // playActivity = (PlayBackActivity) getActivity();
+        Log.d("INFO","HEREEEEEEEEEEEEEEEEEE");
+        audioList = AudioUtil.getAudioList(MotionAnalysis.this);
+        Log.d("INFO", "kkkkkkkkkkkkkk"+mood);
+        Log.d("INFO", "AudioList got");
+        int playNow = -1;
+//        for (Audio audio : audioList) {
+        Log.v("INFO","OOOOOOOOOOOOOOO"+audioList.size());
+        for(int i=0;i<audioList.size();i++){
+            Audio audio=audioList.get(i);
+            Log.v("INFO",i+" got");
+            if(audio==null){Log.d("INFO","null audio met");continue;}
+            Log.v("INFO",audio.getMood()+"eeeeeeeeeeee"+"sss"+audio.getTitle());
+            if(audio.getMood()!=null)
+                if (audio.getMood().equals(mood)) {
+
+                    playNow = i;
+                    Log.d("INFO", "Audio got by moodkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+                    Log.v("INFO",mood+playNow+"kkkkkkkkkkkkkkkkkkkkkkkkkkk");
+                    break;
+                }
+        }
+
+        //参考自C:\Users\Administrator\Desktop\RhymeMusic-master\RhymeMusic-master\app\src\main\java\priv\valueyouth\rhymemusic\fragment\LocalMusicFragment.java
+        MusicApplication application = (MusicApplication) MotionAnalysis.this.getApplication();
+        Log.d("INFO", "MusicApplication got hhhhhhhhhhhhhhhhhhhh");
+        if(playNow!=-1)
+            application.getMusicBinder().startPlay(playNow, 0);
+        // application = (MusicApplication) getApplication();
+        // application.setCurrentMusic(playNow);
+        // application.setCurrentPosition(???);
+        // playActivity.playMusic();
     }
 }

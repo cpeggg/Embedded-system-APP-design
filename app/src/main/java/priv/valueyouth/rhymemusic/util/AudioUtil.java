@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import priv.valueyouth.rhymemusic.activity.MotionAnalysis;
+
 
 /**
  * 该类会返回一个带有音乐信息的List
@@ -101,7 +103,14 @@ public class AudioUtil
                         break;
                 }
             }
+            String title=bundle.getString(MediaStore.Audio.Media.TITLE);//added
+            for(String s: MotionAnalysis.MOODS){
+                if(title.contains(s)){
+                    bundle.putString("_mood", s);
+                    break;
+                }
 
+            }
             Audio audio = new Audio(bundle);
             audioList.add(audio);
         }
