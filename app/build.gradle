@@ -3,13 +3,23 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion '27.0.3'
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "priv.valueyouth.rhymemusic"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
     buildTypes {
         release {
@@ -18,11 +28,10 @@ android {
         }
     }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    compileOnly 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile files('libs/showapi_sdk.jar')
     compile files('libs/gson-2.7-javadoc.jar')
