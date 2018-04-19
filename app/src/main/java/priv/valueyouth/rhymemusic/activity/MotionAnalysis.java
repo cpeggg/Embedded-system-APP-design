@@ -225,7 +225,10 @@ public class MotionAnalysis extends AppCompatActivity
             Log.d("INFO","GET request from server.");
             // 重新构造一个StringBuffer,用来存放从服务器获取到的数据
             StringBuffer strBuf = new StringBuffer();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 631f00c36abf86e840a7fa7e8fef3f851341b259
 
             // 打开输入流 , 读取服务器返回的数据
             BufferedReader reader = new BufferedReader(new
