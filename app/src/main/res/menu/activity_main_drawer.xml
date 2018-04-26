@@ -16,7 +16,7 @@
         android:title="听歌识曲" />
     <item
         android:id="@+id/motion_analysis"
-        android:icon="@drawable/audio_info"
+        android:icon="@drawable/mood"
         android:title="情绪识别"
         />
 

@@ -1,5 +1,6 @@
 package priv.valueyouth.rhymemusic.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,30 +12,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.show.api.ShowApiRequest;
-
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import priv.valueyouth.rhymemusic.R;
+import priv.valueyouth.rhymemusic.activity.MainActivity;
 import priv.valueyouth.rhymemusic.adapter.MusicListAdapter;
 import priv.valueyouth.rhymemusic.adapter.TopListAdapter;
 import priv.valueyouth.rhymemusic.application.MusicApplication;
 import priv.valueyouth.rhymemusic.bean.AudioBean;
-import priv.valueyouth.rhymemusic.bean.JsonBean;
+import priv.valueyouth.rhymemusic.service.DownloadService;
 import priv.valueyouth.rhymemusic.service.MusicService;
-import priv.valueyouth.rhymemusic.test.OnlinePlayer;
+import priv.valueyouth.rhymemusic.util.Audio;
+import priv.valueyouth.rhymemusic.util.AudioUtil;
 import priv.valueyouth.rhymemusic.util.Constant;
+import priv.valueyouth.rhymemusic.util.HttpCallbackListener;
 import priv.valueyouth.rhymemusic.util.OnlineAudioUtil;
+import priv.valueyouth.rhymemusic.util.downLoadFromUrl;
+
 
 
 /**
@@ -64,6 +64,7 @@ public class OnlineMusicFragment extends Fragment implements
 
     private MusicService.MusicBinder musicBinder;
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler()
     {
         @Override
@@ -161,16 +162,14 @@ public class OnlineMusicFragment extends Fragment implements
         listView.setAdapter(topListAdapter);
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        String url = audioList.get(position).getUrl();
-        Log.d(TAG, SUB + "onItemClick" + url);
-
-        musicBinder = application.getMusicBinder();
-        musicBinder.startPlay(url);
-        Snackbar.make(view, "歌曲正在缓冲，请耐心等待！", Snackbar.LENGTH_SHORT).show();
+        DownloadService ds=new DownloadService();
+        ds.downloadfromlist(audioList,parent,view,position,id,application);
     }
+
 
     @Override
     public void onClick(View v)

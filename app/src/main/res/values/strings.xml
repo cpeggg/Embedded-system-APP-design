@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">韵</string>
-    <string name="search_hint">搜索音乐名称或歌手</string>
-    <string name="nav_tips">用音乐，去记录点滴生活！</string>
-    <string name="no_lyrics">没有歌词</string>
+    <string name="app_name">Facelook</string>
+    <string name="search_hint">搜索歌曲名或歌手</string>
+    <string name="nav_tips">用心给你最适合的音乐！</string>
+    <string name="no_lyrics">暂时没有歌词</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

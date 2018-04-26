@@ -18,6 +18,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
@@ -287,6 +289,7 @@ public class MusicService extends Service
             try
             {
                 /*设置音频路径资源*/
+                Log.d("INFO",audioList.get(currentMusic).getData());
                 mediaPlayer.setDataSource(audioList.get(currentMusic).getData());
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.prepareAsync(); // 准备播放
@@ -298,7 +301,7 @@ public class MusicService extends Service
             }
         }
 
-        public void startPlay(String url)
+        public void startPlay(String Songpath,boolean downloadfinished)
         {
             application.setOnline(true);
             mediaPlayer.reset();  // 重置音乐播放器，使其处于空闲状态。
@@ -306,12 +309,18 @@ public class MusicService extends Service
             try
             {
                 /*设置音频路径资源*/
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.prepareAsync(); // 准备播放
-//                Log.d(TAG, SUB + "startPlay：" + audioList.get(currentMusic).getTitle());
+                File song=new File(Songpath);
+                if (downloadfinished) {
+                    Log.d("DEBUG", "SONGPATH in StartPlay: " + Songpath);
+
+                    mediaPlayer.setDataSource(Songpath);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync(); // 准备播放
+                    Log.d(TAG, SUB + "startPlay：" + Songpath);
+                }
+                else return;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

@@ -59,7 +59,6 @@ public class MainActivity extends BaseActivity
         super.onDestroy();
     }
 
-
     @Override
     public void onBackPressed()
     {
@@ -248,7 +247,7 @@ public class MainActivity extends BaseActivity
     /**
      * 初始化组件
      */
-    private void initComponents()
+    public void initComponents()
     {
         initCommon();
     }
@@ -265,11 +264,6 @@ public class MainActivity extends BaseActivity
                 new SectionsPagerAdapter(getSupportFragmentManager());
         ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        /*为application中的Fragment赋值*/
-//        LocalMusicFragment fragment = (LocalMusicFragment)
-//                mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem() + 1);
-//        application.setLocalMusicFragment(fragment);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);

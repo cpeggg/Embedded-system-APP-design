@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,9 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical"
+        android:onClick="playAllSongs"
         android:orientation="horizontal"
-        android:onClick="playAllSongs">
+        android:scrollbars="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,42 +18,39 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/activity_vertical_margin"
             android:text="播放全部"
-            android:textSize="18dp"
-            android:textColor="#000"/>
+            android:textColor="#000"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/text_sum_songs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
-            android:text="@string/app_name"/>
+            android:layout_weight="1"
+            android:text="@string/app_name" />
 
         <ImageButton
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
             android:layout_gravity="center"
-            android:background="@drawable/list_option"/>
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:background="@drawable/list_option" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:text="更新本地歌曲" />
 
     <ListView
         android:id="@+id/id_music_list"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
         android:layout_height="0dp"
-        android:layout_weight="10"
-        android:choiceMode="singleChoice">
-    </ListView>
-
-    <TextView
-        android:id="@+id/text_extra_scene"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="恭喜你，发现了彩蛋。0.0"
-        android:textSize="20dp"/>
+        android:layout_weight="10"
+        android:choiceMode="singleChoice"></ListView>
 
 </LinearLayout>

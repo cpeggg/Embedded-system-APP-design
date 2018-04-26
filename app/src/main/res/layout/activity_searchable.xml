@@ -14,7 +14,7 @@
         android:layout_margin="10dp"
         android:iconifiedByDefault="true"
         android:imeOptions="actionSearch"
-        android:queryHint="搜索音乐、歌手">
+        android:queryHint="搜索音乐名">
 
     </SearchView>
 

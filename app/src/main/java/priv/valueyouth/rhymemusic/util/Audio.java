@@ -20,6 +20,7 @@ public class Audio
     private String displayName; //
     private String mimeType;    // 文件类型
     private String data;        // The data stream for the file
+    private String mood;    //added
 
     private int id;             // The unique ID for a row
     private int artistId;       // 歌手ID
@@ -52,6 +53,7 @@ public class Audio
         displayName = bundle.getString(MediaStore.Audio.Media.DISPLAY_NAME);
         mimeType = bundle.getString(MediaStore.Audio.Media.MIME_TYPE);
         data = bundle.getString(MediaStore.Audio.Media.DATA);
+        mood = bundle.getString("_mood");//
 
         id = bundle.getInt(MediaStore.Audio.Media._ID);
         artistId = bundle.getInt(MediaStore.Audio.Media.ARTIST_ID);
@@ -68,7 +70,10 @@ public class Audio
         isNotification = bundle.getInt(MediaStore.Audio.Media.IS_NOTIFICATION) == 1;
 
     }
-
+    public String getMood()//added
+    {
+        return mood;
+    }
     public String getData()
     {
         return data;

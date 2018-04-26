@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class LocalMusicFragment extends Fragment implements View.OnClickListener
     private TextView textAllSongs;
     private TextView textExtraScene; // 彩蛋
 
+    private Button button;
     private SearchView searchMusic;
 
     @Override
@@ -128,26 +130,25 @@ public class LocalMusicFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
-        if ( v.getId() == R.id.text_extra_scene )
+        if ( v.getId() == R.id.button )
         {
-            int color = getResources().getColor(R.color.colorAccent);
-            textExtraScene.setTextColor(color);
-
-            String extraScene = "常言说的好：好奇害死猫。";
-            Toast.makeText(getContext(), extraScene, Toast.LENGTH_SHORT).show();
+            mainActivity.initComponents();
         }
     }
 
     private void initComponents(View view)
     {
         /*文本类初始化*/
-        textExtraScene = (TextView) view.findViewById(R.id.text_extra_scene);
+        //textExtraScene = (TextView) view.findViewById(R.id.text_extra_scene);
         textAllSongs = (TextView) view.findViewById(R.id.text_sum_songs);
-        textExtraScene.setOnClickListener(this);
+//        textExtraScene.setOnClickListener(this);
 
         /*初始化列表*/
         musicView = (ListView) view.findViewById(R.id.id_music_list);
         musicView.setOnItemClickListener(this);
+        button = (Button)view.findViewById(R.id.button);
+        button.setOnClickListener(this);
+//        button.setOnClickListener(this);
     }
 
     /**
@@ -156,6 +157,7 @@ public class LocalMusicFragment extends Fragment implements View.OnClickListener
     private void loadData()
     {
         /*加载音乐列表*/
+        Log.d("DEBUG","Begin loading data.");
         audioList = AudioUtil.getAudioList(mainActivity);
         musicListAdapter = new MusicListAdapter(mainActivity, audioList, application);
         musicView.setAdapter(musicListAdapter);

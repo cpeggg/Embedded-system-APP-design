@@ -17,6 +17,7 @@ import java.util.List;
 
 import priv.valueyouth.rhymemusic.R;
 import priv.valueyouth.rhymemusic.application.MusicApplication;
+import priv.valueyouth.rhymemusic.service.DownloadService;
 import priv.valueyouth.rhymemusic.util.Audio;
 import priv.valueyouth.rhymemusic.util.AudioUtil;
 
@@ -36,8 +37,10 @@ public class SearchableActivity extends BaseActivity
     private List<String> stringList;
 
     private MusicApplication application;
+    private String qText;
 
     private int currentMusic;
+    private int[] loclist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -80,7 +83,9 @@ public class SearchableActivity extends BaseActivity
     @Override
     public boolean onQueryTextSubmit(String query)
     {
-        return false;
+        DownloadService ds=new DownloadService();
+        ds.downloadbyname(getWindow().getDecorView(),this.application,query);
+        return true;
     }
 
     @Override
@@ -88,11 +93,14 @@ public class SearchableActivity extends BaseActivity
     {
         if ( newText.length() != 0 )
         {
-            currentMusic = getCurrentMusic(newText);
+//            currentMusic = getCurrentMusic(newText);
+            qText=newText;
 
             listView.setFilterText(newText);
             listView.dispatchDisplayHint(View.INVISIBLE);
             listView.setVisibility(View.VISIBLE);
+            loadData();
+
         }
         else
         {
@@ -107,6 +115,7 @@ public class SearchableActivity extends BaseActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
         Log.d(TAG, SUB + "position" + position);
+        currentMusic=loclist[position];
         application.getMusicBinder().startPlay(currentMusic, 0);
 
         Intent intent = new Intent(SearchableActivity.this, PlaybackActivity.class);
@@ -136,6 +145,8 @@ public class SearchableActivity extends BaseActivity
         searchView = (SearchView) findViewById(R.id.view_search);
         searchView.setOnQueryTextListener(this);
         searchView.onActionViewExpanded(); // 默认出现点击输入状态
+        searchView.setIconifiedByDefault(true);
+        searchView.setSubmitButtonEnabled(true);
         searchView.setFocusable(false);
         searchView.clearFocus();
 //        searchView.setSubmitButtonEnabled(true);
@@ -168,14 +179,18 @@ public class SearchableActivity extends BaseActivity
     {
         List<Audio> list = AudioUtil.getAudioList(this);
         stringList = new ArrayList<>();
-
+        loclist=new int[list.size()];
+        int k=0;
         for ( Audio item : list )
-        {
-            String title  = item.getTitle();
-            String artist = item.getArtist();
-            String combine = artist + "——" + title;
+            if(qText!=null&&item.getTitle().contains(qText))
 
-            stringList.add(combine);
+            {
+                loclist[k]=list.indexOf(item);
+            String title  = item.getTitle();
+//            String artist = item.getArtist();
+//            String combine = artist + "——" + title;
+
+            stringList.add(title);
         }
 
         return stringList;
@@ -190,12 +205,12 @@ public class SearchableActivity extends BaseActivity
     {
         Log.d(TAG, SUB + "getCurrentMusic" + musicInfo);
         int currentMusic = 0;
-
         for ( int i = 0; i < stringList.size(); i++ )
         {
             if ( stringList.get(i).contains(musicInfo) )
             {
                 currentMusic = i;
+                break;
             }
         }
 
