@@ -1,0 +1,30 @@
+<<<<<<< HEAD:.idea/libraries/Gradle__com_android_support_support_vector_drawable_23_3_0.xml
+<component name="libraryTable">
+  <library name="Gradle: com.android.support:support-vector-drawable-23.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.3.0.aar/d90f29f0e5e4f142af801ac01af00243/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.3.0.aar/d90f29f0e5e4f142af801ac01af00243/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+=======
+<component name="libraryTable">
+  <library name="com.android.support:support-vector-drawable-23.3.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.3.0.aar/f6d2dd2f0c9d6979d86030f6c9c2d2df/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.3.0.aar/f6d2dd2f0c9d6979d86030f6c9c2d2df/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/AppData/Local/Android/Sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.3.0/support-vector-drawable-23.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+>>>>>>> ced21d19c45658a1ffff1a365ae41b3ea14fd655:.idea/libraries/com_android_support_support_vector_drawable_23_3_0.xml
+</component>
