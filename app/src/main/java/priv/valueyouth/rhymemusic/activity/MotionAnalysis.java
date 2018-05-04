@@ -3,6 +3,7 @@ package priv.valueyouth.rhymemusic.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.os.AsyncTask;
@@ -76,7 +77,19 @@ public class MotionAnalysis extends AppCompatActivity
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
                 //打开相机
-                camera = Camera.open();
+                int cameraCount,camIdx;
+                Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+                cameraCount = Camera.getNumberOfCameras(); // get cameras number
+
+                for ( camIdx = 0; camIdx < cameraCount;camIdx++ ) {
+                    Camera.getCameraInfo( camIdx, cameraInfo ); // get camerainfo
+                    if ( cameraInfo.facing ==Camera.CameraInfo.CAMERA_FACING_FRONT ) {
+                        // 代表摄像头的方位，目前有定义值两个分别为CAMERA_FACING_FRONT前置和CAMERA_FACING_BACK后置
+                        break;
+                    }
+                }
+                camera = Camera.open(camIdx);
+                camera.setDisplayOrientation(90);
                 //给相机设置参数
                 Camera.Parameters parameters= camera.getParameters();
                 //设置保存的格式
@@ -120,6 +133,14 @@ public class MotionAnalysis extends AppCompatActivity
                         String picpath="/mnt/sdcard/DCIM/"+filename;
                         try {
                             FileOutputStream fos=new FileOutputStream(picpath);
+
+                            Matrix matrix = new Matrix();
+                            // 缩放原图
+                            matrix.postScale(1f, 1f);
+                            // 向左旋转45度，参数为正则向右旋转
+                            matrix.postRotate(-90);
+                            //bmp.getWidth(), 500分别表示重绘后的位图宽高
+                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                             bitmap.compress(Bitmap.CompressFormat.PNG,85,fos);
                             camera.stopPreview();
                             camera.startPreview();
@@ -145,8 +166,16 @@ public class MotionAnalysis extends AppCompatActivity
                         Gson gson = new Gson();
                         Log.d("INFO","return value:\n"+result);
                         String transfer=result.toString();
-                        transfer = transfer.substring(transfer.indexOf("emotion")+9,transfer.length()-4);
+                        try {
+                            transfer = transfer.substring(transfer.indexOf("emotion") + 9, transfer.length() - 4);
+                        }
+                        catch (Exception e){
+                            String tips = "情绪识别失败，请调整姿势";
+                            Toast.makeText(MotionAnalysis.this, tips, Toast.LENGTH_SHORT).show();
+                            return;
 
+
+                        }
                         Log.d("INFO","return transfer:\n"+transfer);
                         EmotionBean emotionBean = gson.fromJson(transfer, EmotionBean.class);
                         result=emotionBean.getEmotion();

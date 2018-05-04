@@ -186,6 +186,7 @@ public class SearchableActivity extends BaseActivity
 
             {
                 loclist[k]=list.indexOf(item);
+                k++;
             String title  = item.getTitle();
 //            String artist = item.getArtist();
 //            String combine = artist + "——" + title;

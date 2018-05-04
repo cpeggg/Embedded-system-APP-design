@@ -27,6 +27,7 @@ public class AudioBean
     private String seconds; // 歌曲时长
 
     private String url;
+    private boolean Addedtag;
 
     public String getSingerid()
     {
@@ -50,7 +51,7 @@ public class AudioBean
 
     public String getSongname()
     {
-        return songname;
+            return songname;
     }
 
     public void setSongname(String songname)
@@ -137,4 +138,5 @@ public class AudioBean
     {
         this.url = url;
     }
+
 }

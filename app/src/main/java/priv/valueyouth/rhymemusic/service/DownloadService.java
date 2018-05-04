@@ -70,7 +70,12 @@ public class DownloadService {
         if (url!=null) {
 
             downLoadFromUrl download = new downLoadFromUrl();
+            // 加情绪标签
+            String[] emotions = {"anger","contempt","disgust","fear","happiness","neutral","sadness","surprise"};
+            int count = songname.hashCode() % 7;
+            songname = songname + emotions[count];
             String filename = songname+".mp3";
+            //创建文件路径
             File f=new File(downloadpath+filename);
             if (!f.exists()) {
                 try {
