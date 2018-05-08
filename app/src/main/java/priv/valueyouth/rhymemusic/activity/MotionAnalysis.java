@@ -9,7 +9,7 @@ import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import com.google.gson.Gson;
+import android.util.Log;
 
 import org.json.JSONObject;
 

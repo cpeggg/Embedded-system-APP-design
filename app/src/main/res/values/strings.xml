@@ -44,18 +44,18 @@
         搜索到相应音乐后，应用会首先下载到本地，然后进行播放，下载的时间由网络速度决定，所以需要或多或少等待一段时间。下一阶段的任务目标就包括实现边缓冲边播放，然后由用户决定是否下载，尽力提供更为人性化的服务。
     </string>
 
-    <string name="tips_five">问题6：为什么有的时候情绪识别不能显示正常的结果？</string>
-    <string name="answer_five">
+    <string name="tips_six">问题6：为什么有的时候情绪识别不能显示正常的结果？</string>
+    <string name="answer_six">
         首先要保证拍摄照片的合理有效性，包括人脸占据画幅大部分内容，然后需要保持正常的角度，最后确保环境光线适宜，只有这样才能返回精确有效的情绪值。
     </string>
 
-    <string name="tips_five">问题7：问题七：为什么定时播放停止只有十分钟到九十分钟几个有限的选项？</string>
-    <string name="answer_five">
+    <string name="tips_seven">问题7：问题七：为什么定时播放停止只有十分钟到九十分钟几个有限的选项？</string>
+    <string name="answer_seven">
         因为根据在以交大学生为主要调查对象的问卷，93.6的用户对于定时播放的需求在一个半小时以内，所以最终确定十分钟到就是分钟一共六个最为合理的选项。
     </string>
 
-    <string name="tips_five">问题8：如果我关于此应用有更好的建议或者不好的使用体验，我应该怎么联系你？</string>
-    <string name="answer_five">
+    <string name="tips_eight">问题8：如果我关于此应用有更好的建议或者不好的使用体验，我应该怎么联系你？</string>
+    <string name="answer_eight">
         Junior Development项目小组随时听取您珍贵的想法并结成为您提供更为优质的服务，有任何问题及时联系项目组负责人蔡先生：cpeggg@gmail或者在Github上提出你的issue：github.com/cpeggg/Facelook
     </string>
 </resources>

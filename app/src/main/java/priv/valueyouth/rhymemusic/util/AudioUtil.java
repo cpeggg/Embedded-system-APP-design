@@ -19,7 +19,7 @@ import java.util.List;
 
 import priv.valueyouth.rhymemusic.activity.MotionAnalysis;
 
-
+import android.util.Log;
 /**
  * 该类会返回一个带有音乐信息的List
  * Created by Idea on 2016/5/4.
@@ -99,18 +99,29 @@ public class AudioUtil
 
                     case Cursor.FIELD_TYPE_STRING:
                         String sValue = cursor.getString(colIndex);
+                        if (key == "title") {
+                            int len_t=sValue.length();
+                            for (String s : MotionAnalysis.MOODS) {
+                                int index = sValue.indexOf(s);
+
+                                if (index >= 0) {
+                                    bundle.putString("_mood", s);
+                                    int len = s.length();
+                                    String title = sValue.substring(0,len_t-len );
+                                    sValue=title;
+                                    Log.d("INFO", "CHECKING......" + s);
+                                    break;
+                                }
+
+                            }
+                        }
                         bundle.putString(key, sValue);
                         break;
                 }
             }
-            String title=bundle.getString(MediaStore.Audio.Media.TITLE);//added
-            for(String s: MotionAnalysis.MOODS){
-                if(title.contains(s)){
-                    bundle.putString("_mood", s);
-                    break;
-                }
+//            String title=bundle.getString(MediaStore.Audio.Media.TITLE);//added
 
-            }
+
             Audio audio = new Audio(bundle);
             audioList.add(audio);
         }
