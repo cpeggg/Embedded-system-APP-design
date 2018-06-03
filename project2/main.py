@@ -20,14 +20,19 @@ class mytest(QWidget):
 	def __init__(self):
 		super(mytest, self).__init__()
 		# self.arg = arg
-		loadUi('threat_analysis1.ui',self)
+		loadUi('threat_analysis.ui',self)
 		self.setWindowTitle('test')
 		mainlayout=layout = QGridLayout(self.tab6)
 		self.area = PaintArea()
 		mainlayout.addWidget(self.area) 
 		self.tab6.setLayout(mainlayout)
+		
 		self.login.clicked.connect(self.login_clk)
 		self.register_2.clicked.connect(self.register_clk)
+		self.search.clicked.connect(self.search_clk)
+		# self.login.clicked.connect(self.login_clk)
+		# self.login.clicked.connect(self.login_clk)
+
 		self.lg=Login()
 		self.rg=Register()
 	# @pyqtSlot()
@@ -40,7 +45,17 @@ class mytest(QWidget):
 	def register_clk(self):
 		self.rg.exec()
 
-		
+	def search_clk(self):
+		if(self.lineEdit.text()==""):
+			return
+		if(self.lineEdit.text().split(".")[-1].isnumeric()):
+			#ip
+			QMessageBox.about(self, "Warning", "ip")
+		else:
+			#domin name
+			QMessageBox.about(self, "Warning", "domin name")
+
+
 class Login(QDialog):
 	def __init__(self):
 		super(Login,self).__init__()
